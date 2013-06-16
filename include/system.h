@@ -1,7 +1,7 @@
 #ifndef __SYSTEM_H
 #define __SYSTEM_H
 
-typedef int size_t
+typedef int size_t;
 
 /* KERNEL.C */
 extern size_t strlen(const char *str);
