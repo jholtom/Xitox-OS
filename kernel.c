@@ -3,7 +3,9 @@
 #endif
 #include <stddef.h>
 #include <stdint.h>
- 
+
+#include < system.h >
+
 #if defined(__linux__)
 #error "Need a crosscompiler. probably should get one. Unless you love errors!"
 #endif
