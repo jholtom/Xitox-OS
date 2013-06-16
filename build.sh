@@ -11,7 +11,7 @@ echo "Moving files around"
 mv xitox.kern build/xitox.kern
 cp build/xitox.kern isodir/boot/xitox.kern
 echo "Building grub boot image"
-echo "grub2-mkrescue -o build/XitoxOS.iso isodir - not execing for repetitive builds"
+grub2-mkrescue -o build/XitoxOS.iso isodir >/dev/null 2>/dev/null
 echo "Cleaning up..."
 rm *.o
 echo "Kernel executable is located at build/xitox.kern"
