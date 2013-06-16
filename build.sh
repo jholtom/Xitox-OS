@@ -17,7 +17,17 @@ i586-elf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions 
 
 i586-elf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I./include -c -o kb.o kb.c
 
-ld -T link.ld -o kernel.bin start.o main.o scrn.o gdt.o idt.o isrs.o irq.o timer.o kb.o
+ld -T linker.ld -o kernel.bin start.o main.o scrn.o gdt.o idt.o isrs.o irq.o timer.o kb.o
 echo 'Cleaning up object files...'
 rm *.o
-echo 'Finished Xitox build.'
+echo 'Finished Xitox build'
+.
+
+
+
+
+
+
+
+
+'
