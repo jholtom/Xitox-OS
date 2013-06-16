@@ -1,4 +1,6 @@
-#include < system.h >
+#include <stdint.h>
+#include <stdbool.h>
+#include <system.h>
 
 /* These define our textpointer, our background and foreground
  * *  colors (attributes), and x and y cursor coordinates */
@@ -11,8 +13,6 @@ void scroll(void)
 {
         unsigned blank, temp;
 
-        /* A blank is defined as a space... we need to give it
-         *     *  backcolor too */
         blank = 0x20 | (attrib << 8);
 
         /* Row 25 is the end, this means we need to scroll up */
@@ -21,11 +21,11 @@ void scroll(void)
                 /* Move the current text chunk that makes up the screen
                  *         *  back in the buffer by a line */
                 temp = csr_y - 25 + 1;
-                memcpy (textmemptr, textmemptr + temp * 80, (25 - temp) * 80 * 2);
+                memcpy(textmemptr, textmemptr + temp * 80, (25 - temp) * 80 * 2);
 
                 /* Finally, we set the chunk of memory that occupies
                  *         *  the last line of text to our 'blank' character */
-                memsetw (textmemptr + (25 - temp) * 80, blank, 80);
+                memsetw(textmemptr + (25 - temp) * 80, blank, 80);
                 csr_y = 25 - 1;
         }
 }
@@ -67,7 +67,7 @@ void cls()
         /* Sets the entire screen to spaces in our current
          *     *  color */
         for(i = 0; i < 25; i++)
-                memsetw (textmemptr + i * 80, blank, 80);
+                memsetw(textmemptr + i * 80, blank, 80);
 
         /* Update out virtual cursor, and then move the
          *     *  hardware cursor */
@@ -142,12 +142,11 @@ void puts(unsigned char *text)
         }
 }
 
-/* Sets the forecolor and backcolor that we will use */
 void settextcolor(unsigned char forecolor, unsigned char backcolor)
 {
         /* Top 4 bytes are the background, bottom 4 bytes
          *     *  are the foreground color */
-        attrib = (backcolor << 4) | (forecolor & 0x0F)
+        attrib = (backcolor << 4) | (forecolor & 0x0F);
 }
 
 /* Sets our text-mode VGA pointer, then clears the screen for us */
