@@ -118,6 +118,6 @@ void kernel_main()
 {
         terminal_initialize();
         /*implement \n since now we get vga-specific newline char */
-        terminal_writestring("Hello, kernel World!\n");
+        terminal_writestring("Welcome to XitoxOS.\n");
         terminal_writestring("> ");
 }
