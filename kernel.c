@@ -3,8 +3,12 @@
 #endif
 #include <stddef.h>
 #include <stdint.h>
+<<<<<<< HEAD
 #include < system.h >
 
+=======
+ 
+>>>>>>> parent of 74ac261... Update kernel.c
 #if defined(__linux__)
 #error "Need a crosscompiler. probably should get one. Unless you love errors!"
 #endif
