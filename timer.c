@@ -1,46 +1,35 @@
-/* bkerndev - Bran's Kernel Development Tutorial
-*  By:   Brandon F. (friesenb@gmail.com)
-*  Desc: Timer driver
-*
-*  Notes: No warranty expressed or implied. Use at own risk. */
-#include <system.h>
+#include <timer.h>
+#include <isr.h>
+#include <monitor.h>
 
-/* This will keep track of how many ticks that the system
-*  has been running for */
-int timer_ticks = 0;
+u32int tick = 0;
 
-/* Handles the timer. In this case, it's very simple: We
-*  increment the 'timer_ticks' variable every time the
-*  timer fires. By default, the timer fires 18.222 times
-*  per second. Why 18.222Hz? Some engineer at IBM must've
-*  been smoking something funky */
-void timer_handler(struct regs *r)
+static void timer_callback(registers_t regs)
 {
-    /* Increment our 'tick count' */
-    timer_ticks++;
-
-    /* Every 18 clocks (approximately 1 second), we will
-    *  display a message on the screen */
-    if (timer_ticks % 18 == 0)
-    {
-          //puts("One second has passed\n");
-    }
+    tick++;
+    monitor_write("Tick: ");
+    monitor_write_dec(tick);
+    monitor_write("\n");
 }
 
-/* This will continuously loop until the given time has
-*  been reached */
-void timer_wait(int ticks)
+void init_timer(u32int frequency)
 {
-    unsigned long eticks;
+    // Firstly, register our timer callback.
+    register_interrupt_handler(IRQ0, &timer_callback);
 
-    eticks = timer_ticks + ticks;
-    while(timer_ticks < eticks);
-}
+    // The value we send to the PIT is the value to divide it's input clock
+    // (1193180 Hz) by, to get our required frequency. Important to note is
+    // that the divisor must be small enough to fit into 16-bits.
+    u32int divisor = 1193180 / frequency;
 
-/* Sets up the system clock by installing the timer handler
-*  into IRQ0 */
-void timer_install()
-{
-    /* Installs 'timer_handler' to IRQ0 */
-    irq_install_handler(0, timer_handler);
+    // Send the command byte.
+    outb(0x43, 0x36);
+
+    // Divisor has to be sent byte-wise, so split here into upper/lower bytes.
+    u8int l = (u8int)(divisor & 0xFF);
+    u8int h = (u8int)( (divisor>>8) & 0xFF );
+
+    // Send the frequency divisor.
+    outb(0x40, l);
+    outb(0x40, h);
 }
