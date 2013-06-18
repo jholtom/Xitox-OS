@@ -16,13 +16,17 @@ int main(struct multiboot *mboot_ptr)
     monitor_clear();
     monitor_write("Welcome to XitoxOS.\n\n");
     monitor_write("*     Bootup in progress......\n");
+    monitor_write("*     Initializing interrupts\n");
+    __asm__ __volatile__ ("sti");
+    monitor_write("*     Timer powering up\n");
+    init_timer(50);
+    monitor_write("      CMOS Timer powered up at 100hz\n");
     // Find the location of our initial ramdisk.
     ASSERT(mboot_ptr->mods_count > 0);
     u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
     u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
     // Don't trample our module with placement accesses, please!
     placement_address = initrd_end;
-    __asm__ __volatile__("sti");
     // Start paging.
     monitor_write("*     Initializing paging\n");
     initialise_paging();
@@ -56,9 +60,6 @@ int main(struct multiboot *mboot_ptr)
         }
         i++;
     }*/
-    monitor_write("*     Initializing Timer\n");
-    timer_install();
-    //init_timer(50);
     monitor_write("*     Activating keyboard\n");
     init_keyboard_driver();
   for(;;)
