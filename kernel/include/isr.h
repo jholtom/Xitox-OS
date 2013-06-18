@@ -1,3 +1,5 @@
+#ifndef _ISR_H
+#define _ISR_H
 #include <common.h>
 
 // A few defines to make life a little easier
@@ -31,3 +33,4 @@ typedef struct registers
 // first parameter.
 typedef void (*isr_t)(registers_t);
 void register_interrupt_handler(u8int n, isr_t handler);
+#endif
