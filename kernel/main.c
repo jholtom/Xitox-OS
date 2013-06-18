@@ -22,7 +22,7 @@ int main(struct multiboot *mboot_ptr)
     u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
     // Don't trample our module with placement accesses, please!
     placement_address = initrd_end;
-    __asm__ __volatile__ ("sti");
+    __asm__ __volatile__("sti");
     // Start paging.
     monitor_write("*     Initializing paging\n");
     initialise_paging();
@@ -59,8 +59,12 @@ int main(struct multiboot *mboot_ptr)
     monitor_write("*     Initializing Timer\n");
     //init_timer(50);
     monitor_write("*     Activating keyboard\n");
-    keyboard_install();
-    /*monitor_write("\n\nEntering infinite loop...");
-    for(;;){}*/
+    init_keyboard_driver();
+  for(;;)
+  {
+      char c = keyboard_getchar();
+      if (c)
+          monitor_put(c);
+  }       
     return 0;
 }
