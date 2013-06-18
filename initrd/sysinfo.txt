@@ -1,0 +1,4 @@
+System Information:
+XitoxOS - i386 compatible
+XitoxFS - Node based VFS
+-- Jacob Holtom

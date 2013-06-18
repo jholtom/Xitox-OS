@@ -6,6 +6,7 @@
 #include <multiboot.h>
 #include <fs.h>
 #include <initrd.h>
+#include <kb.h>
 
 extern u32int placement_address;
 
@@ -14,21 +15,26 @@ int main(struct multiboot *mboot_ptr)
     init_descriptor_tables();
     // Initialise the screen (by clearing it)
     monitor_clear();
-
+    monitor_write("Welcome to XitoxOS.\n\n");
+    monitor_write("*     Bootup in progres......\n");
     // Find the location of our initial ramdisk.
     ASSERT(mboot_ptr->mods_count > 0);
     u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
     u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
     // Don't trample our module with placement accesses, please!
     placement_address = initrd_end;
-
+    monitor_write("*     Activating Interrupts\n");
+    __asm__ __volatile__ ("sti");
     // Start paging.
+    monitor_write("*     Initializing paging\n");
     initialise_paging();
-
+    monitor_write("*     Activating keyboard support\n");
+    keyboard_install();
+    monitor_write("*     Loading initial ramdisk\n");
     // Initialise the initial ramdisk, and set it as the filesystem root.
     fs_root = initialise_initrd(initrd_location);
-    monitor_write("Welcome to XitoxOS.\n");
     // list the contents of /
+    monitor_write("*     Listing contents of initial ramdisk\n\n");
     int i = 0;
     struct dirent *node = 0;
     while ( (node = readdir_fs(fs_root, i)) != 0)
@@ -43,7 +49,7 @@ int main(struct multiboot *mboot_ptr)
         }
         else
         {
-            monitor_write("\n\t contents: \"");
+            monitor_write("\n\t contents: \"\n");
             char buf[256];
             u32int sz = read_fs(fsnode, 0, 256, buf);
             int j;
@@ -54,6 +60,7 @@ int main(struct multiboot *mboot_ptr)
         }
         i++;
     }
-
+    monitor_write("\n\nEntering infinite loop...");
+    for(;;){}
     return 0;
 }

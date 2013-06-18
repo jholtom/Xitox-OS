@@ -4,7 +4,7 @@
 *
 *  Notes: No warranty expressed or implied. Use at own risk. */
 #include <common.h>
-
+#include <monitor.h>
 /* KBDUS means US Keyboard Layout. This is a scancode table
 *  used to layout a standard US keyboard. I have left some
 *  comments in to give you an idea of what key is what, even
@@ -79,12 +79,12 @@ void keyboard_handler(struct regs *r)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
-        putch(kbdus[scancode]);
+        monitor_put(kbdus[scancode]);
     }
 }
 
 /* Installs the keyboard handler into IRQ1 */
 void keyboard_install()
 {
-    irq_install_handler(1, keyboard_handler);
+    register_interrupt_handler(1, keyboard_handler);
 }
