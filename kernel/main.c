@@ -16,7 +16,7 @@ int main(struct multiboot *mboot_ptr)
     // Initialise the screen (by clearing it)
     monitor_clear();
     monitor_write("Welcome to XitoxOS.\n\n");
-    monitor_write("*     Bootup in progres......\n");
+    monitor_write("*     Bootup in progress......\n");
     // Find the location of our initial ramdisk.
     ASSERT(mboot_ptr->mods_count > 0);
     u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
@@ -60,7 +60,7 @@ int main(struct multiboot *mboot_ptr)
     }*/
     monitor_write("*     Activating keyboard");
     keyboard_install();
-    monitor_write("\n\nEntering infinite loop...");
-    for(;;){}
+    /*monitor_write("\n\nEntering infinite loop...");
+    for(;;){}*/
     return 0;
 }
