@@ -19,7 +19,7 @@ int main(struct multiboot *mboot_ptr)
     monitor_write("*     Initializing interrupts\n");
     __asm__ __volatile__ ("sti");
     monitor_write("*     Timer powering up\n");
-    init_timer(50);
+    //init_timer(50);
     monitor_write("      CMOS Timer powered up at 100hz\n");
     // Find the location of our initial ramdisk.
     ASSERT(mboot_ptr->mods_count > 0);
