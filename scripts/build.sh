@@ -20,7 +20,7 @@ i586-elf-gcc -c ../kernel/isr.c -o isr.o -std=gnu99 -ffreestanding -O2 -Wall -We
 echo "Linking kernel and headers"
 i586-elf-gcc -T ../kernel/linker.ld -o ../build/xitox.kern -ffreestanding -O2 -nostdlib boot.o main.o common.o fs.o descriptor_tables.o initrd.o kheap.o ordered_array.o monitor.o timer.o paging.o isr.o gdt.o interrupt.o -lgcc
 echo "Moving files around"
-cp build/xitox.kern isodir/boot/xitox.kern
+cp ../build/xitox.kern ../isodir/boot/xitox.kern
 echo "Building grub boot image"
 grub2-mkrescue -o ../build/XitoxOS.iso isodir >/dev/null 2>/dev/null
 echo "Cleaning up..."

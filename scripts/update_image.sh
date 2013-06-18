@@ -4,4 +4,5 @@ sudo umount mnt
 sudo mount ../build/floppy.img mnt
 sudo cp ../build/xitox.kern mnt/kernel
 sudo cp ../build/initrd.img mnt/initrd
+sync
 sudo umount mnt
