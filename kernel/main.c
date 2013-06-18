@@ -1,4 +1,3 @@
-#include <fs.h>
 #include <monitor.h>
 #include <descriptor_tables.h>
 #include <timer.h>
@@ -23,7 +22,6 @@ int main(struct multiboot *mboot_ptr)
     u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
     // Don't trample our module with placement accesses, please!
     placement_address = initrd_end;
-    monitor_write("*     Activating Interrupts\n");
     __asm__ __volatile__ ("sti");
     // Start paging.
     monitor_write("*     Initializing paging\n");
@@ -58,7 +56,9 @@ int main(struct multiboot *mboot_ptr)
         }
         i++;
     }*/
-    monitor_write("*     Activating keyboard");
+    monitor_write("*     Initializing Timer\n");
+    //init_timer(50);
+    monitor_write("*     Activating keyboard\n");
     keyboard_install();
     /*monitor_write("\n\nEntering infinite loop...");
     for(;;){}*/

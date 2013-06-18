@@ -13,6 +13,6 @@ extern char* get_stream(char character);
 // Keyboard driver variables
 volatile char* buffer2;
 volatile char* buffer;        //For storing strings
-volatile u32int kb_count = 0; //Position in buffer
-volatile int gets_flag = 0;
+//volatile u32int kb_count = 0; //Position in buffer
+//volatile int gets_flag = 0;
 #endif
