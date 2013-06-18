@@ -57,6 +57,7 @@ int main(struct multiboot *mboot_ptr)
         i++;
     }*/
     monitor_write("*     Initializing Timer\n");
+    timer_install();
     //init_timer(50);
     monitor_write("*     Activating keyboard\n");
     init_keyboard_driver();

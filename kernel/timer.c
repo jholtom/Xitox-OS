@@ -2,14 +2,10 @@
 #include <isr.h>
 #include <monitor.h>
 
-u32int tick = 0;
-
-static void timer_callback(registers_t regs)
+static void timer_callback(registers_t *regs)
 {
     tick++;
-    monitor_write("Tick: ");
-    monitor_write_dec(tick);
-    monitor_write("\n");
+    switch_task();
 }
 
 void init_timer(u32int frequency)
@@ -18,9 +14,9 @@ void init_timer(u32int frequency)
     register_interrupt_handler(IRQ0, &timer_callback);
 
     // The value we send to the PIT is the value to divide it's input clock
-    // (1193180 Hz) by, to get our required frequency. Important to note is
+    // by, to get our required frequency. Important to note is
     // that the divisor must be small enough to fit into 16-bits.
-    u32int divisor = 1193180 / frequency;
+    u32int divisor = 1193180 / frequency; // 1193180 Hz
 
     // Send the command byte.
     outb(0x43, 0x36);

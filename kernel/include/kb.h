@@ -1,8 +1,9 @@
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef KB_H
+#define KB_H
 
 #include <common.h>
 #include <descriptor_tables.h>
+#include <isr.h>
 
 #define CONTROL 0x1
 #define ALT 0x2

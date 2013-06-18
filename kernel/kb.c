@@ -1,6 +1,4 @@
-#include <common.h>
 #include <kb.h>
-#include <descriptor_tables.h>
 
 //Define your keyboard layouts here:
 
