@@ -28,13 +28,11 @@ int main(struct multiboot *mboot_ptr)
     // Start paging.
     monitor_write("*     Initializing paging\n");
     initialise_paging();
-    monitor_write("*     Activating keyboard support\n");
-    keyboard_install();
     monitor_write("*     Loading initial ramdisk\n");
     // Initialise the initial ramdisk, and set it as the filesystem root.
     fs_root = initialise_initrd(initrd_location);
-    // list the contents of /
-    monitor_write("*     Listing contents of initial ramdisk\n\n");
+    // list the contents of / - Disable for now while fixing keyboard - TODO: move into seperate method to be called by kernel shell
+    /*monitor_write("*     Listing contents of initial ramdisk\n\n");
     int i = 0;
     struct dirent *node = 0;
     while ( (node = readdir_fs(fs_root, i)) != 0)
@@ -59,7 +57,9 @@ int main(struct multiboot *mboot_ptr)
             monitor_write("\"\n");
         }
         i++;
-    }
+    }*/
+    monitor_write("*     Activating keyboard");
+    keyboard_install();
     monitor_write("\n\nEntering infinite loop...");
     for(;;){}
     return 0;
