@@ -1,4 +1,7 @@
 Xitox-OS
 ================
 Built a small kernel and VFS + initrd.
-Working on expanding, adding keyboard support and other exciting features.
+Keyboard - Working
+Malloc - in testing.
+Paging - in testing.
+Multitasking - in testing.

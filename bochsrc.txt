@@ -1,0 +1,7 @@
+megs: 32
+romimage: file=/usr/share/bochs/BIOS-bochs-latest
+floppya: 1_44=/dev/loop7, status=inserted
+boot: a
+mouse: enabled=0
+clock: sync=realtime
+magic_break: enabled=1
