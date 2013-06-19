@@ -153,6 +153,7 @@ void initialise_paging()
     register_interrupt_handler(14, page_fault);
 
     // Now, enable paging!
+    current_directory = clone_directory(kernel_directory); 
     switch_page_directory(kernel_directory);
 
     // Initialise the kernel heap.
@@ -219,4 +220,41 @@ void page_fault(registers_t regs)
     monitor_write_hex(faulting_address);
     monitor_write("\n");
     PANIC("Page fault");
+}
+page_directory_t *clone_directory(page_directory_t *src)
+{
+    u32int phys;
+    // Make a new page directory and obtain its physical address.
+    page_directory_t *dir = (page_directory_t*)kmalloc_ap(sizeof(page_directory_t), &phys);
+    // Ensure that it is blank.
+    memset(dir, 0, sizeof(page_directory_t));
+
+    // Get the offset of tablesPhysical from the start of the page_directory_t structure.
+    u32int offset = (u32int)dir->tablesPhysical - (u32int)dir;
+
+    // Then the physical address of dir->tablesPhysical is:
+    dir->physicalAddr = phys + offset;
+
+    // Go through each page table. If the page table is in the kernel directory, do not make a new copy.
+    int i;
+    for (i = 0; i < 1024; i++)
+    {
+        if (!src->tables[i])
+            continue;
+
+        if (kernel_directory->tables[i] == src->tables[i])
+        {
+            // It's in the kernel, so just use the same pointer.
+            dir->tables[i] = src->tables[i];
+            dir->tablesPhysical[i] = src->tablesPhysical[i];
+        }
+        else
+        {
+            // Copy the table.
+            u32int phys;
+            dir->tables[i] = clone_table(src->tables[i], &phys);
+            dir->tablesPhysical[i] = phys | 0x07;
+        }
+    }
+    return dir;
 }
