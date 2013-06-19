@@ -25,8 +25,8 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("*     Bootup in progress......\n");
     monitor_write("*     Initializing interrupts\n");
     __asm__ __volatile__ ("sti");
-    monitor_write("*     Timer powering up\n");
-    init_timer(50);
+   monitor_write("*     Timer powering up\n");
+    //init_timer(50);
     monitor_write("      CMOS Timer powered up at 100hz\n");
     // Find the location of our initial ramdisk.
     ASSERT(mboot_ptr->mods_count > 0);
@@ -36,11 +36,11 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     placement_address = initrd_end;
     // Start paging.
     monitor_write("*     Initializing paging\n");
-    initialise_paging();
+   // initialise_paging();
     monitor_write("*     Memory test (malloc)\n");
-    mmutst();
+    //mmutst();
     monitor_write("*     Initializing multitasking\n");
-    initialise_tasking();
+    //initialise_tasking();
     monitor_write("*     Loading initial ramdisk\n");
     // Initialise the initial ramdisk, and set it as the filesystem root.
     fs_root = initialise_initrd(initrd_location);
@@ -74,7 +74,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("*     Activating keyboard\n");
     init_keyboard_driver();
     monitor_write("*     Allow system call firing\n");
-    initialise_syscalls();
+    //initialise_syscalls();
   for(;;)
   {
       char c = keyboard_getchar();
