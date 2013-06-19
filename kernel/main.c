@@ -7,10 +7,14 @@
 #include <initrd.h>
 #include <kb.h>
 
-extern u32int placement_address;
+void shell();
 
-int main(struct multiboot *mboot_ptr)
+extern u32int placement_address;
+u32int initial_esp;
+
+int main(struct multiboot *mboot_ptr, u32int initial_stack)
 {
+    initial_esp = initial_stack;
     init_descriptor_tables();
     // Initialise the screen (by clearing it)
     monitor_clear();
@@ -30,6 +34,8 @@ int main(struct multiboot *mboot_ptr)
     // Start paging.
     monitor_write("*     Initializing paging\n");
     initialise_paging();
+    monitor_write("*     Memory test (malloc)\n");
+    mmutst();
     monitor_write("*     Loading initial ramdisk\n");
     // Initialise the initial ramdisk, and set it as the filesystem root.
     fs_root = initialise_initrd(initrd_location);
@@ -69,4 +75,21 @@ int main(struct multiboot *mboot_ptr)
           monitor_put(c);
   }       
     return 0;
+}
+void mmutst();
+void mmutst()
+{
+    u32int malloc_test = kmalloc(100);
+    if(malloc_test != 0)
+    {
+         monitor_write("    MAM working well: ");
+         monitor_write_hex(malloc_test);
+         monitor_write(" Bytes allocated\n");
+         monitor_write("    Now freeing allocated memory\n");
+         kfree((void*)malloc_test);
+    }
+    else
+    {
+         monitor_write("    MAM test failed...\n");    
+    }
 }
