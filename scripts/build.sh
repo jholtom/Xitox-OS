@@ -7,22 +7,22 @@ nasm -f elf -o gdt.o ../kernel/gdt.s
 nasm -f elf -o interrupt.o ../kernel/interrupt.s
 nasm -f elf -o process.o ../kernel/process.s
 echo "Building Kernel"
-i586-elf-gcc -c ../kernel/main.c -o main.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/common.c -o common.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/fs.c -o fs.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/descriptor_tables.c -o descriptor_tables.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/initrd.c -o initrd.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/kheap.c -o kheap.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/monitor.c -o monitor.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/ordered_array.c -o ordered_array.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/timer.c -o timer.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/paging.c -o paging.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/isr.c -o isr.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/kb.c -o kb.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/task.c -o task.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
-i586-elf-gcc -c ../kernel/syscall.c -o syscall.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w
+i586-elf-gcc -c ../kernel/main.c -o main.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/common.c -o common.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/fs.c -o fs.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/descriptor_tables.c -o descriptor_tables.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/initrd.c -o initrd.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/kheap.c -o kheap.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/monitor.c -o monitor.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/ordered_array.c -o ordered_array.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/timer.c -o timer.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/paging.c -o paging.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/isr.c -o isr.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/kb.c -o kb.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/task.c -o task.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
+i586-elf-gcc -c ../kernel/syscall.c -o syscall.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../kernel/include -w -g
 echo "Linking kernel and headers"
-i586-elf-gcc -T ../kernel/linker.ld -o ../build/xitox.kern -ffreestanding -O2 -nostdlib boot.o main.o common.o fs.o descriptor_tables.o initrd.o kheap.o ordered_array.o monitor.o timer.o paging.o isr.o gdt.o interrupt.o kb.o task.o syscall.o process.o -lgcc
+i586-elf-gcc -T ../kernel/linker.ld -o ../build/xitox.kern -ffreestanding -O2 -nostdlib boot.o main.o common.o fs.o descriptor_tables.o initrd.o kheap.o ordered_array.o monitor.o timer.o isr.o gdt.o interrupt.o kb.o process.o task.o syscall.o paging.o -lgcc
 echo "Moving files around"
 cp ../build/xitox.kern ../isodir/boot/xitox.kern
 echo "Building grub boot image"

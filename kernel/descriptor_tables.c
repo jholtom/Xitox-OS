@@ -48,7 +48,7 @@ static void init_gdt()
     gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
 
     gdt_flush((u32int)&gdt_ptr);
-    tss_flush();
+    //tss_flush();
 }
 
 // Set the value of one GDT entry.
