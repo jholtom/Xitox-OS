@@ -37,8 +37,8 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     // Start paging.
     monitor_write("*     Initializing paging\n");
    // initialise_paging();
-    monitor_write("*     Memory test (malloc)\n");
-    mmutst();
+   // monitor_write("*     Memory test (malloc)\n");
+   // mmutst();
     monitor_write("*     Initializing multitasking\n");
     initialise_tasking();
     monitor_write("*     Loading initial ramdisk\n");
