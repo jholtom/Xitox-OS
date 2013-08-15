@@ -37,13 +37,13 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     // Start paging.
   //  monitor_write("*     Initializing paging\n");
    // initialise_paging();
-    monitor_write("*     Memory test (malloc)\n");
-   mmutst();
-    monitor_write("*     Initializing multitasking\n");
-    initialise_tasking();
-    monitor_write("*     Loading initial ramdisk\n");
+    monitor_write("/     Memory test (malloc)\n");
+   //mmutst();
+    monitor_write("/     Initializing multitasking\n");
+   // initialise_tasking();
+    monitor_write("/     Loading initial ramdisk\n");
     // Initialise the initial ramdisk, and set it as the filesystem root.
-    fs_root = initialise_initrd(initrd_location);
+    //fs_root = initialise_initrd(initrd_location);
     // list the contents of / - Disable for now while fixing keyboard - TODO: move into seperate method to be called by kernel shell
     /*monitor_write("*     Listing contents of initial ramdisk\n\n");
     int i = 0;
@@ -73,14 +73,16 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     }*/
     monitor_write("*     Activating keyboard\n");
     init_keyboard_driver();
-    monitor_write("*     Allow system call firing\n");
+    monitor_write("/     Allow system call firing\n");
     //initialise_syscalls();
-  for(;;)
+  //Infinite loop for keyboard testing!
+  /*for(;;)
   {
       char c = keyboard_getchar();
       if (c)
           monitor_put(c);
-  }       
+  } */
+   //Return 0 and make dead.    
     return 0;
 }
 void mmutst();
