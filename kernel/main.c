@@ -24,7 +24,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("Welcome to XitoxOS.\n\n");
     monitor_write("*     Bootup in progress......\n");
     monitor_write("*     Initializing interrupts\n");
-   // asm volatile ("sti");
+    asm volatile ("sti");
     monitor_write("*     Timer powering up\n");
     init_timer(50);
     monitor_write("      CMOS Timer powered up at 100hz\n");
