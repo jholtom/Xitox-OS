@@ -24,7 +24,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("Welcome to XitoxOS.\n\n");
     monitor_write("*     Bootup in progress......\n");
     monitor_write("*     Initializing interrupts\n");
-    asm volatile ("sti");
+   // asm volatile ("sti");
     monitor_write("*     Timer powering up\n");
     init_timer(50);
     monitor_write("      CMOS Timer powered up at 100hz\n");
@@ -76,12 +76,12 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("/     Allow system call firing\n");
     //initialise_syscalls();
   //Infinite loop for keyboard testing!
-  /*for(;;)
+  for(;;)
   {
       char c = keyboard_getchar();
       if (c)
           monitor_put(c);
-  } */
+  } 
    //Return 0 and make dead.    
     return 0;
 }
