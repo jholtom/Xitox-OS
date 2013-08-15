@@ -7,10 +7,7 @@ u32int tick = 0;
 void timer_callback(registers_t regs)
 {
     tick++;
-    if(tick % 18 == 0)
-    {
-      monitor_write("another second bit the dust\n"); 
-    }
+    monitor_write("tick.\n"); 
 }
 
 void init_timer(u32int frequency)
