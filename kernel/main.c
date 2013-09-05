@@ -26,7 +26,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("*     Initializing interrupts\n");
     asm volatile ("sti");
     monitor_write("*     Timer powering up\n");
-    init_timer(50);
+    //init_timer(50);
     monitor_write("      CMOS Timer powered up at 100hz\n");
     // Find the location of our initial ramdisk.
     ASSERT(mboot_ptr->mods_count > 0);
@@ -43,9 +43,9 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
    // initialise_tasking();
     monitor_write("/     Loading initial ramdisk\n");
     // Initialise the initial ramdisk, and set it as the filesystem root.
-    //fs_root = initialise_initrd(initrd_location);
+    fs_root = initialise_initrd(initrd_location);
     // list the contents of / - Disable for now while fixing keyboard - TODO: move into seperate method to be called by kernel shell
-    /*monitor_write("*     Listing contents of initial ramdisk\n\n");
+    monitor_write("*     Listing contents of initial ramdisk\n\n");
     int i = 0;
     struct dirent *node = 0;
     while ( (node = readdir_fs(fs_root, i)) != 0)
@@ -70,7 +70,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
             monitor_write("\"\n");
         }
         i++;
-    }*/
+    }
     monitor_write("*     Activating keyboard\n");
     init_keyboard_driver();
     monitor_write("/     Allow system call firing\n");
